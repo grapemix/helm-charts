@@ -1,0 +1,86 @@
+site_name: namesilo-dyndns 
+site_author: grapemix
+site_description: Helm chart for grapemix/namesilo-dyndns 
+# Site URL needed by the social plugin
+site_url: https://grapemix.github.io/helm-charts/
+
+
+# repository
+repo_name: grapemix/helm-charts
+repo_url: https://github.com/grapemix/helm-charts
+
+# theme
+theme:
+  name: material
+  logo: assets/logo.svg
+  favicon: assets/favicon.png
+  language: en
+  palette:
+    - scheme: default
+      media: "(prefers-color-scheme: light)"
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - scheme: slate
+      primary: lime
+      accent: lime
+      media: "(prefers-color-scheme: dark)"
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+  font:
+    text: Lato
+    code: Source Code Pro
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - toc.integrate
+    - content.code.annotate
+    - content.tabs.link
+
+# navigation
+nav:
+  - Home: index.md
+  - Charts:
+      - cloudflare-dyndns: charts/namesilo-dyndns.md
+
+# socials
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/grapemix
+
+# customizations
+extra_css:
+  - styles/custom.css
+
+# additional plugins
+plugins:
+  - search
+  - social
+  - material-plausible
+
+# code highlighting
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true

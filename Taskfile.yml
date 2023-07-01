@@ -1,0 +1,12 @@
+version: '3'
+
+includes:
+  docs: ./.github/taskfiles/docs.yml
+  chart: ./.github/taskfiles/chart.yml
+
+tasks:
+  docs:
+    summary: Documentation specific tasks.
+    cmds:
+      - task: docs:default
+      - for chart in charts/*; do cp $chart/README.md docs/$chart.md; done
