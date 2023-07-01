@@ -1,0 +1,81 @@
+{{- if not .Values.cronJob.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "namesilo-dyndns.fullname" . }}
+  labels:
+    {{- include "namesilo-dyndns.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- if not .Values.autoscaling.minReplicas }}
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  {{- end }}
+  {{- if not .Values.autoscaling.maxReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  {{- end }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "namesilo-dyndns.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "namesilo-dyndns.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.fullnameOverride }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: IS_CRON_JOB
+              value: 0
+            {{- range $i, $val := .Values.env }}
+            - name: {{ $val.name | quote }}
+              value: {{ $val.value | quote }}
+            {{- end }}
+          envFrom:
+            - secretRef:
+                {{- if and .Values.secret.create (empty .Values.secret.existingSecret) }}
+                name: {{ printf "%s-token" (include "namesilo-dyndns.fullname" . ) }}
+                {{- else }}
+                name: {{ .Values.secret.existingSecret }}
+                {{- end }}
+          resources: {{ if not .Values.resources -}}{}{{- end }}
+            {{- if .Values.resources }}
+            {{- toYaml .Values.resources | nindent 16 }}
+            {{- end }}
+
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - test -S /tmp/i_am_ready
+          readinessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - test -S /tmp/i_am_ready
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.cronJob.nameservers }}
+      dnsConfig:
+        nameservers:
+          {{- toYaml . | nindent 14 }}
+      {{- end }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end -}}
