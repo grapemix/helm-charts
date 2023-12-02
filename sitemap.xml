@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://grapemix.github.io/helm-charts/</loc>
+         <lastmod>2023-12-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://grapemix.github.io/helm-charts/LICENSE/</loc>
+         <lastmod>2023-12-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://grapemix.github.io/helm-charts/charts/agola/</loc>
+         <lastmod>2023-12-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://grapemix.github.io/helm-charts/charts/namesilo-dyndns/</loc>
+         <lastmod>2023-12-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>
